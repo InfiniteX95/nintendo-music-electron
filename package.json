@@ -1,0 +1,16 @@
+{
+  "name": "nintendo-music",
+  "version": "1.0.0",
+  "description": "A simple Electron wrapper for Nintendo Music",
+  "license": "MIT",
+  "author": "infinite",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "electron": "github:castlabs/electron-releases#v42.3.3+wvcus"
+  }
+}
