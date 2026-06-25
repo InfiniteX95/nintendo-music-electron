@@ -4,6 +4,11 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
+    download: {
+      mirrorOptions: {
+        mirror: "https://github.com/castlabs/electron-releases/releases/download/",
+      },
+    },
   },
   rebuildConfig: {},
   makers: [
