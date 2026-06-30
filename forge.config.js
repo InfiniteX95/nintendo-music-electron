@@ -41,4 +41,19 @@ module.exports = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+  hooks: {
+    postMake: async (_, makeResults) => {
+      const releaseDir = path.join(__dirname, 'out', 'release');
+
+      fs.rmSync(releaseDir, { recursive: true, force: true });
+      fs.mkdirSync(releaseDir, { recursive: true });
+
+      for (const result of makeResults) {
+        for (const artifact of result.artifacts) {
+          const destination = path.join(releaseDir, path.basename(artifact));
+          fs.copyFileSync(artifact, destination);
+        }
+      }
+    },
+  },
 };
