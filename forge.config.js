@@ -43,7 +43,7 @@ function getReleaseFileName(result, artifact) {
     suffix = '_portable';
   }
 
-  return `${pkg.productName}_${pkg.version}_${platform}_${arch}${suffix}${extension}`;
+  return `${pkg.name}_${pkg.version}_${platform}_${arch}${suffix}${extension}`;
 }
 
 module.exports = {
