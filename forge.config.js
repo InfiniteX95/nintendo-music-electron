@@ -3,6 +3,14 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 const fs = require('fs');
 const path = require('path');
 
+const ignoredFiles = [
+  'RELEASES',
+];
+
+const ignoredExtensions = [
+  '.nupkg',
+];
+
 module.exports = {
   packagerConfig: {
     asar: true,
@@ -53,7 +61,13 @@ module.exports = {
 
       for (const result of makeResults) {
         for (const artifact of result.artifacts) {
+          const fileName = path.basename(artifact);
           const destination = path.join(releaseDir, path.basename(artifact));
+
+          if (ignoredFiles.includes(fileName) || ignoredExtensions.some(ext => fileName.endsWith(ext))) {
+            continue;
+          }
+
           fs.copyFileSync(artifact, destination);
         }
       }
