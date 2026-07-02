@@ -2,7 +2,7 @@ const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 const fs = require('fs');
 const path = require('path');
-const { productName, version } = require('./package.json');
+const pkg = require('./package.json');
 
 const ignoredFiles = [
   'RELEASES',
@@ -12,7 +12,7 @@ const ignoredExtensions = [
   '.nupkg',
 ];
 
-function getReleaseFileName(productName, version, result, artifact) {
+function getReleaseFileName(result, artifact) {
   const platformMap = {
     linux: 'linux',
     win32: 'windows',
@@ -43,7 +43,7 @@ function getReleaseFileName(productName, version, result, artifact) {
     suffix = '_portable';
   }
 
-  return `${productName}_${version}_${platform}_${arch}${suffix}${extension}`;
+  return `${pkg.productName}_${pkg.version}_${platform}_${arch}${suffix}${extension}`;
 }
 
 module.exports = {
@@ -97,7 +97,7 @@ module.exports = {
       for (const result of makeResults) {
         for (const artifact of result.artifacts) {
           const fileName = path.basename(artifact);
-          const destination = path.join(releaseDir, getReleaseFileName(productName, version, result, artifact));
+          const destination = path.join(releaseDir, getReleaseFileName(result, artifact));
 
           if (ignoredFiles.includes(fileName) || ignoredExtensions.some(ext => fileName.endsWith(ext))) {
             continue;
