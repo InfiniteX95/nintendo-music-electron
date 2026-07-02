@@ -11,6 +11,40 @@ const ignoredExtensions = [
   '.nupkg',
 ];
 
+function getReleaseFileName(result, artifact) {
+  const platformMap = {
+    linux: 'linux',
+    win32: 'windows',
+    darwin: 'macos',
+  };
+
+  const platform = platformMap[result.platform] ?? result.platform;
+  const arch = result.arch;
+
+  const fileName = path.basename(artifact);
+
+  let extension;
+  if (fileName.endsWith('.tar.gz')) {
+    extension = '.tar.gz';
+  } else {
+    extension = path.extname(fileName);
+  }
+
+  let suffix = '';
+
+  // Windows Installer
+  if (extension === '.exe') {
+    suffix = '_setup';
+  }
+
+  // Windows portable archive
+  if (result.platform === 'win32' && extension === '.zip') {
+    suffix = '_portable';
+  }
+
+  return `${productName}_${version}_${platform}_${arch}${suffix}${extension}`;
+}
+
 module.exports = {
   packagerConfig: {
     asar: true,
@@ -62,7 +96,7 @@ module.exports = {
       for (const result of makeResults) {
         for (const artifact of result.artifacts) {
           const fileName = path.basename(artifact);
-          const destination = path.join(releaseDir, path.basename(artifact));
+          const destination = path.join(releaseDir, getReleaseFileName(result, artifact));
 
           if (ignoredFiles.includes(fileName) || ignoredExtensions.some(ext => fileName.endsWith(ext))) {
             continue;
