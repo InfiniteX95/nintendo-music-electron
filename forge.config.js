@@ -49,6 +49,7 @@ function getReleaseFileName(result, artifact) {
 module.exports = {
   packagerConfig: {
     asar: true,
+    icon: path.join(__dirname, 'icons', 'icon'),
     download: {
       mirrorOptions: {
         mirror: "https://github.com/castlabs/electron-releases/releases/download/",
@@ -59,15 +60,26 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
+      config: {
+        setupIcon: path.join(__dirname, 'icons', 'icon.ico')
+      }
     },
     {
       name: '@electron-forge/maker-dmg',
+      config: {
+        icon: path.join(__dirname, 'icons', 'icon.icns')
+      }
     },
     {
       name: '@electron-forge/maker-zip',
     },
     {
       name: '@electron-forge/maker-deb',
+      config: {
+        options: {
+          icon: path.join(__dirname, 'icons', 'icon.png')
+        }
+      }
     },
   ],
   plugins: [
