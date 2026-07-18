@@ -77,7 +77,10 @@ module.exports = {
       name: '@electron-forge/maker-deb',
       config: {
         options: {
-          icon: path.join(__dirname, 'icons', 'icon.png')
+          productName: "Nintendo Music",
+          genericName: "Music Player",
+          icon: path.join(__dirname, 'icons', 'icon.png'),
+          categories: ['Audio', 'Music']
         }
       }
     },
