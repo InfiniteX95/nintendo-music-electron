@@ -1,6 +1,6 @@
 {
   "name": "nintendo-music",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple Electron wrapper for the Nintendo Music web app",
   "license": "MIT",
   "author": "infinite",
